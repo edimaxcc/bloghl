@@ -1,0 +1,28 @@
+.container
+  - @user_posts.each do |post|
+    .row
+      .col-lg-12
+        .well
+          .media
+            .media-left
+              = link_to @user
+                = gravatar_image_tag @user.email, class: "img-circle" 
+            .media-body
+              h3 = link_to post.title, post
+              p = post.body
+              span
+               | Autor:  
+              b = @user.name
+              span
+               |  Comments 
+              .badge = post.comments.count
+              span
+               |  Published   
+              date
+              Submitted #{time_ago_in_words(post.created_at)} Ago  
+         
+br
+.container
+  .row
+    .col-md-6.col-md-offset-3.text-center
+      = will_paginate @user_posts

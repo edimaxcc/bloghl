@@ -1,0 +1,43 @@
+.container
+  .row
+    /! blog-contents
+    section.col-md-8
+      article.single-blog-item
+        .alert.alert-info
+          p.date
+          Submitted #{time_ago_in_words(@post.created_at)} Ago |
+          span
+          |  by 
+          = link_to @post.user.name, "/users/#{@post.user_id}"
+        h3 = @post.title
+        p  = @post.body
+    
+      .container-fluid#comments
+        .form-group-edit
+          .row#back_btn
+            .col-sm-offset-2.col-sm-10
+              = link_to "Back", posts_path, class: "btn btn-primary Back", id: "btn_show"
+              - if current_user
+                - if current_user.id == @post.user_id
+                  = link_to 'Edit', edit_post_path, class: "btn btn-primary Back", id: "btn_show" 
+                  = link_to 'Delete', post_path,class: "btn btn-primary Back",id: "btn_show",  method: :delete, data: { confirm: 'Are you sure?' }
+
+      
+        h3.span
+        |  Comments  
+        span.badge = @post.comments.count
+
+        = render "comments/comment"
+        
+        = render "comments/form"
+
+    /! sidebar
+    .aside.col-md-4.col-sm-8.col-xs-8
+      .sidebar
+        h1 Procure por Posts
+        .search-widget
+          .input-group.margin-bottom
+            = form_tag posts_path, :method => "get" do
+              p
+              = text_field_tag :search
+              = submit_tag "Search"

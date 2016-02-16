@@ -1,0 +1,18 @@
+#comments
+  p#comment_body
+  hr
+- @comments.each do |comment|
+    .blog-item
+      .media
+        .media-left
+          = link_to "/users/#{comment.user_id}"
+             = gravatar_image_tag comment.user.email, class: "img-circle" 
+        .media-body
+          = comment.body
+        hr 
+        span
+         |  Published   
+        date
+         Submitted #{time_ago_in_words(comment.created_at)} Ago
+          | by: 
+         =  comment.user.name  

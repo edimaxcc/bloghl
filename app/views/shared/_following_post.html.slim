@@ -1,0 +1,37 @@
+.container
+  .row
+    .col-md-12
+      h1 Find Feeds
+      #find_posts
+        .show_search
+          = form_tag users_path, :method => "get" do
+            p
+            = text_field_tag :search
+            = submit_tag "Search"
+  .row
+    - @search_following_posts.each do |post|
+        .container
+          .col-lg-12
+            .blog-item
+              .media
+                .media-left
+                  = link_to post.user
+                     = gravatar_image_tag post.user.email, class: "img-circle" 
+                .media-body
+                  h3 = link_to post.title, post
+                  p = post.body
+                  span
+                   | Autor:  
+                  b = post.user.name
+                  span
+                   |  Comments 
+                   .badge = post.comments.count
+                  span
+                   |  Published   
+                  date
+                  b.Submitted #{time_ago_in_words(post.created_at)} Ago         
+br
+.container
+  .row
+    .col-md-6.col-md-offset-3.text-center
+      = will_paginate @search_following_posts

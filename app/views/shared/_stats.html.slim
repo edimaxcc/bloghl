@@ -1,0 +1,16 @@
+- if current_user
+	.stats
+	  a href=("= following_user_path(@user)")
+	    strong#following.stats
+	     | Following
+	     span.badge = current_user.following.count
+	    
+	  a href=("= followers_user_path(@user)")
+	    strong#followers.stats
+	     | followers
+	     span.badge = current_user.followers.count
+	  = link_to posts_path
+	     strong#posts
+	      | Posts
+	      span.badge = current_user.posts.count
+    

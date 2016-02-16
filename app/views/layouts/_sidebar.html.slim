@@ -1,0 +1,61 @@
+#sidebar
+  .navbar.navbar-default.navbar-fixed-top 
+    .container-fluid
+      /! Brand and toggle get grouped for better mobile display
+      .navbar-header
+        button.navbar-toggle data-target="#bs-sidebar-navbar-collapse-1" data-toggle="collapse" type="button" 
+          span.sr-only Toggle navigation
+         
+        .navbar-brand
+          #logo
+          - if current_user
+            .img-img
+              = gravatar_image_tag current_user.email, class: "img-circle" 
+
+      /! Collect the nav links, forms, and other content for toggling
+      #bs-sidebar-navbar-collapse-1.collapse.navbar-collapse
+        ul.nav.navbar-nav
+          li.category.active
+            = link_to "/"
+              span.pull-left.hidden-xs.showopacity.glyphicon.glyphicon-home style="font-size:16px;"
+              | Home 
+          li
+            - if current_user
+              = link_to current_user
+                span.pull-left.hidden-xs.showopacity.glyphicon.glyphicon-user style="font-size:16px;"  
+                | Profile
+                 
+          li
+            a href="#" 
+              span.pull-left.hidden-xs.showopacity.glyphicon.glyphicon-envelope style="font-size:16px;"
+              | Messages
+        ul.nav.navbar-nav.navbar-right
+          - if current_user
+             li
+              = link_to destroy_user_session_path, method: :delete
+                 span
+                  | Logout
+          - else
+            li
+              = link_to new_user_session_path, method: :new
+                 span
+                  | Singin      
+          li.dropdown
+            a.dropdown-toggle data-toggle="dropdown" href="#" 
+              | Settings
+              span.caret
+              span.pull-left.hidden-xs.showopacity.glyphicon.glyphicon-cog style="font-size:16px;" 
+            ul.dropdown-menu.forAnimate role="menu" 
+              li
+                a href="#"  Action
+              li
+                a href="#"  Another action
+              li
+                a href="#"  Something else here
+              li.divider
+              li
+                a href="#"  Separated link
+              li.divider
+              li
+                a href="#"  One more separated link
+= yield          

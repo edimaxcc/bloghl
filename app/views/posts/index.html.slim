@@ -1,0 +1,40 @@
+.container
+  .row
+    .col-md-12
+      h1 Listing posts
+
+      #find_posts
+        .show_search
+          = form_tag posts_path, :method => "get" do
+             p
+             = text_field_tag :search
+             = submit_tag "Search"      
+br
+#list-group
+  .row
+    - @posts.each do |post|
+        .container
+          .col-lg-12
+            .blog-item
+              .media
+                .media-left
+                  = link_to "users/#{post.user_id}"
+                     = gravatar_image_tag post.user.email, class: "img-circle" 
+                .media-body
+                  h3 = link_to post.title, post
+                  p = post.body
+                  span
+                   | Autor:  
+                   b = link_to post.user.name, "users/#{post.user_id}"
+                  span
+                   |  Comments 
+                   .badge = post.comments.count 
+                  span
+                   | Published   
+                  date
+                   Submitted #{time_ago_in_words(post.created_at)} Ago
+  br       
+  .container
+    .row
+      .col-md-6.col-md-offset-3.text-center
+        = will_paginate @posts

@@ -1,6 +1,6 @@
-h1 List User
+.container
+  .row
+    .col-sm-4
+      = render 'follow_form'
 
-.row
-  .col-md-6
-    - @user.each do |user|
-        = @user.email
+  = render "user_panel"

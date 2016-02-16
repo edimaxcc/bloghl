@@ -1,0 +1,24 @@
+= form_for(@post, html: { class: "form-horizontal", role: "form" }) do |f|
+  - if @post.errors.any?
+      .alert.alert-danger.alert-dismissable
+        button.close-data-dismiss "alert", :type => "button"
+         span{"aria-hidden" => "true"} &times;
+          span.sr-only Close
+        h4
+        = pluralize(@post.errors.count, "error")
+          prohibited this post from being saved:
+        ul
+         - @post.errors.full_messages.each do |msg|
+            li= msg
+  .form-group
+    = f.label :title, class: "col-sm-2 control-label"
+    .col-sm-10
+      = f.text_field :title, class: "form-control"
+  .form-group
+    = f.label :body, class: "col-sm-2 control-label"
+    .col-sm-10
+      = f.text_area :body, class: "form-control"
+  .form-group
+    .col-sm-offset-2.col-sm-10
+      = f.submit class: "btn btn-primary"
+      = link_to "Back", posts_path, class: "btn btn-primary Back"

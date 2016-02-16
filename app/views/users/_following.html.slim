@@ -1,0 +1,39 @@
+.container
+  .row
+    - @users_following.each do |user|
+        .col-sm-3.col-md-6.col-lg-4
+          .panel.panel-info
+            .panel-heading = user.name
+            .img.img-thumbnail
+              = link_to user
+                 = gravatar_image_tag user.email.to_s
+            .panel-body
+              .stats
+                strong#followers.stats
+                 | Followers
+                 span.badge = user.followers.count
+                strong#following.stats
+                 | Following
+                 span.badge = user.following.count
+                strong#post.stats
+                 | Posts
+                 span.badge = user.posts.count
+
+              .unfollow
+                .row
+                  - if current_user
+                    - if current_user.following?(user)
+                      .col-sm-3 
+                        = form_for(current_user.active_relationships.find_by(followed_id: user.id),
+                          html:{ method: :delete }) do |f|
+                           = f.submit "Unfollow", class: "btn"
+                    - else
+                      .col-sm-3 
+                        = form_for(current_user.active_relationships.build) do |f|
+                           div = hidden_field_tag :followed_id, user.id
+                           = f.submit "Follow", class: "btn btn-primary"
+br       
+.container
+  .row
+    .col-md-6.col-md-offset-3.text-center
+      = will_paginate @users_following

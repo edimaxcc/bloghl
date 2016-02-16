@@ -1,0 +1,24 @@
+#main_content
+ #header
+   - if current_user
+      = link_to "All Posts", posts_path
+
+   - else
+     li = link_to root_path 
+       span
+        | Back to All Posts
+   - if current_user
+      .buttons
+       = link_to new_post_path, class: "button button" 
+           span
+            | New Post
+       = link_to destroy_user_session_path, method: :delete, class: "button button"
+          span
+           | Log Out
+   - else
+      = link_to new_user_session_path, class: "button button"
+         span
+          | Login
+ - flash.each do |name, msg|
+    = content_tag(:div, msg, class: "alert")
+ = yield

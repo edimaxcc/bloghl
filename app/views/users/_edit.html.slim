@@ -1,0 +1,20 @@
+.container
+  = form_for(@user, html: { method: :put }) do |f|
+     .field
+       = f.label :email
+       br/
+       = f.email_field :email, autofocus: true
+     .field
+       = f.label :password
+       br
+       = f.password_field :password, autocomplete: "off"
+     .field
+       = f.label :password_confirmation
+       br
+       = f.password_field :password_confirmation, autocomplete: "off"
+     .field
+       = f.label :current_password
+       br
+       = f.password_field :current_password, autocomplete: "off"
+     .actions
+       = f.submit "Update"

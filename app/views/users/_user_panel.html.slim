@@ -1,0 +1,49 @@
+#user_action
+  .container
+    br
+    ul.nav.nav-tabs
+      li.active
+        a data-toggle="tab" href="#home"  Posts
+      li
+        a data-toggle="tab" href="#menu1"  Following
+      li
+        a data-toggle="tab" href="#menu2"  Followers
+      - if current_user == @user
+        li
+          a data-toggle="tab" href="#menu3"  Feeds
+        li
+          a data-toggle="tab" href="#menu4"  Find Friends   
+        li
+          a data-toggle="tab" href="#menu5"  Edit
+          
+  .tab-content
+    #home.tab-pane.fade.in.active
+      .container
+        h1 Post
+        = render "posts"
+    #menu1.tab-pane.fade
+      .container
+        h3 Following
+        br
+        = @user.following.count
+	    = render "following"
+    #menu2.tab-pane.fade
+      .container
+        h3 Followers
+        br
+        = @user.followers.count
+        = render "followers"
+		              
+    - if current_user == @user
+    #menu3.tab-pane.fade
+     - if current_user
+       = render "shared/following_post"
+    #menu4.tab-pane.fade
+     .show_search
+       h1 Find Friends
+       = render "users"
+
+    #menu5.tab-pane.fade
+      h3 Menu 3
+      = render "/users/edit"
+      

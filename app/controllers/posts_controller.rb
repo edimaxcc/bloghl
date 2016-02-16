@@ -1,16 +1,25 @@
 class PostsController < ApplicationController
+  before_filter :correct_user, only: [:destroy]
   before_action :set_post, only: [:show, :edit, :update, :destroy]
-  before_filter :correct_user, only: :destroy
+  
 
   # GET /posts
   # GET /posts.json
   def index
-    @posts = Post.all
+   #if params[:search]
+    #@posts = Post.all.search(params[:search])
+   #else
+    @posts = Post.all.search(params[:search]).paginate(page: params[:page], :per_page => 6).order('created_at DESC')
+   #end
   end
 
   # GET /posts/1
   # GET /posts/1.json
   def show
+    @user = User.find_by(params[:id])
+    @post = Post.find(params[:id])
+    @comments = @post.comments.order('created_at DESC')
+    
   end
 
   # GET /posts/new
@@ -40,17 +49,19 @@ class PostsController < ApplicationController
   # PATCH/PUT /posts/1
   # PATCH/PUT /posts/1.json
   def update
-    respond_to do |format|
-      if @post.update(post_params)
-        format.html { redirect_to @post, notice: 'Post was successfully updated.' }
-        format.json { render :show, status: :ok, location: @post }
-      else
-        format.html { render :edit }
-        format.json { render json: @post.errors, status: :unprocessable_entity }
+    @post = Post.find(params[:id]) 
+      if current_user.id == @post.user.id
+      respond_to do |format|
+        if @post.update(post_params)
+          format.html { redirect_to @post, notice: 'Post was successfully updated.' }
+          format.json { render :show, status: :ok, location: @post }
+        else
+          format.html { render :edit }
+          format.json { render json: @post.errors, status: :unprocessable_entity }
+        end
       end
     end
   end
-
   # DELETE /posts/1
   # DELETE /posts/1.json
   def destroy
@@ -60,6 +71,12 @@ class PostsController < ApplicationController
       format.json { head :no_content }
     end
   end
+
+  def comment
+    @comments = @user.posts.comments.build(params_comment)
+    render show
+  end
+
 
   private
     # Use callbacks to share common setup or constraints between actions.
@@ -71,9 +88,9 @@ class PostsController < ApplicationController
     def post_params
       params.require(:post).permit(:title, :body, :user_id)
     end
-
+    
     def correct_user
-    @post = current_user.posts.find_by_id(params[:id])
+    @post = current_user.posts.find_by(params[:id])
     redirect_to root_path if @post.nil?
     end
 end

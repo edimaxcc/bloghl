@@ -1,0 +1,4 @@
+- if current_user != @user
+   = form_for(current_user.active_relationships.build) do |f|
+      div = hidden_field_tag :followed_id, @user.id
+      = f.submit "Follow", class: "btn btn-primary"

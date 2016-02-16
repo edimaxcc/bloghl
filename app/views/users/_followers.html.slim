@@ -1,0 +1,21 @@
+.row
+  - @users_followers.each do |user|
+      .col-sm-3.col-md-6.col-lg-4
+        .panel.panel-info
+          .panel-heading = user.name
+          .img.img-thumbnail
+            = link_to user
+               = gravatar_image_tag user.email.to_s
+          .panel-body
+            .stats
+              strong#followers.stats
+               | Followers
+               span.badge = user.followers.count
+              strong#following.stats
+               | Following
+               span.badge = user.following.count
+  br       
+  .container
+    .row
+      .col-md-6.col-md-offset-3.text-center
+        = will_paginate @users_followers
