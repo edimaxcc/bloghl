@@ -20,8 +20,9 @@ end
 # Posts
 users = User.order(:created_at).take(6)
 50.times do
-  body = Faker::Lorem.sentence(5)
-  users.each { |user| user.posts.create!(body: body) }
+  title = Faker::Lorem.sentence(5)
+  body = Faker::Lorem.sentence(200)
+  users.each { |user| user.posts.create!(title: title, body: body) }
 end
 
 # Following relationships
