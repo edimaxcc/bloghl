@@ -1,25 +1,30 @@
 development:
   adapter: postgresql
+  encoding: utf8
   database: bloghl_development
-  host: 192.168.25.19
-  user: bloghl_development
-  password: 
   pool: 5
+  username: <%= ENV['APPNAME_DATABASE_USER'] %>
+  password: <%= ENV['APPNAME_DATABASE_PASSWORD'] %>
+  host: localhost
+  template: template0
   timeout: 5000
+
 test:
   adapter: postgresql
   database: bloghl_test
-  host: 192.168.25.19
-  host: 192.168.25.19
-  user: bloghl_development
   pool: 5
+  username: edimax
+  password: 123
+  host: localhost
+  template: template0
   timeout: 5000
 
 production:
   adapter: postgresql
+  encoding: utf8
   database: depan7tup1ng68
-  host: ec2-107-20-224-236.compute-1.amazonaws.com
-  user: mnmuswmznzdiwd
-  password: HhNE2tK4m8jSJOuSLu1YmgjGlX
   pool: 5
+  username: mnmuswmznzdiwd
+  password: SECRET_KEY_BASE
+  host: ec2-107-20-224-236.compute-1.amazonaws.com
   timeout: 5000
