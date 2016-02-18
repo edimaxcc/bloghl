@@ -1,19 +1,25 @@
 development:
   adapter: postgresql
   database: bloghl_development
-  host: localhost
+  host: 192.168.25.19
+  user: bloghl_development
+  password: 
   pool: 5
   timeout: 5000
 test:
   adapter: postgresql
   database: bloghl_test
-  host: localhost
+  host: 192.168.25.19
+  host: 192.168.25.19
+  user: bloghl_development
   pool: 5
   timeout: 5000
 
 production:
   adapter: postgresql
-  database: bloghl_production
-  host: 
+  database: depan7tup1ng68
+  host: ec2-107-20-224-236.compute-1.amazonaws.com
+  user: mnmuswmznzdiwd
+  password: HhNE2tK4m8jSJOuSLu1YmgjGlX
   pool: 5
   timeout: 5000
