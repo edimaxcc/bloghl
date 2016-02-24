@@ -16,7 +16,7 @@ class PostsController < ApplicationController
   # GET /posts/1
   # GET /posts/1.json
   def show
-    @user = User.find(params[:id])
+    #@user = User.find(params[:id])
     @post = Post.find(params[:id])
     @comments = @post.comments.order('created_at DESC')
     

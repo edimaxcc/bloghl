@@ -20,6 +20,22 @@ class CommentsController < ApplicationController
     end 
   end
 
+  def edit
+   
+  end
+  
+  def update
+    @comment.update(comment_params)
+    
+  end
+
+  def destroy
+    @post = Post.find(params[:post_id])
+    @comment = @post.comments.find(params[:id]).destroy
+    redirect_to @post
+    
+  end
+
   private
 
   def comment_params

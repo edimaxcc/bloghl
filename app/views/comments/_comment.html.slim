@@ -9,10 +9,15 @@
              = gravatar_image_tag comment.user.email, class: "img-circle" 
         .media-body
           = comment.body
+
         hr 
         span
          |  Published   
         date
          Submitted #{time_ago_in_words(comment.created_at)} Ago
           | by: 
-         =  comment.user.name  
+         =  comment.user.name
+         - if can? :destroy, comment
+           |  
+           = link_to "Delete", post_comment_path(comment.post, comment), method: :delete, data: { confirm: 'Are you sure?' }
+           

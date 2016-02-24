@@ -8,6 +8,7 @@ gem 'pg'
 gem 'rails_12factor'
 # Security Authentication
 gem 'devise', '~> 3.5.2'
+gem 'cancancan', '~> 1.10'
 gem 'gravatar_image_tag'
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
