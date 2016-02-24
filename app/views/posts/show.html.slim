@@ -17,9 +17,10 @@
           .row#back_btn
             .col-sm-offset-2.col-sm-10
               = link_to "Back", posts_path, class: "btn btn-primary Back", id: "btn_show"
-              - if can? :update, @post
-                 = link_to 'Edit', edit_post_path, class: "btn btn-primary Back", id: "btn_show" 
-                 = link_to 'Delete', post_path,class: "btn btn-primary Back",id: "btn_show",  method: :delete, data: { confirm: 'Are you sure?' }
+              - if user_signed_in?
+                - if can? :update, @post
+                  = link_to 'Edit', edit_post_path, class: "btn btn-primary Back", id: "btn_show" 
+                  = link_to 'Delete', post_path,class: "btn btn-primary Back",id: "btn_show",  method: :delete, data: { confirm: 'Are you sure?' }
 
       
         h3.span
