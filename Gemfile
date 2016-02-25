@@ -13,6 +13,7 @@ gem 'gravatar_image_tag'
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
 gem 'bootstrap-sass', '~> 3.3.5.1'
+gem 'chosen-rails'
 gem 'bootstrap-generators', '~> 3.3.4'
 gem 'slim', '~> 3.0.6'
 gem 'simple_form', '~> 3.2.0'

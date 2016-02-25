@@ -12,6 +12,7 @@ class ConversationsController < ApplicationController
     else
       @conversations = @mailbox.trash
     end
+
     @conversations = @conversations.paginate(page: params[:page], per_page: 10)
   end
 
@@ -27,7 +28,7 @@ class ConversationsController < ApplicationController
   def reply
     current_user.reply_to_conversation(@conversation, params[:body])
     flash[:success] = 'Reply sent'
-    redirect_to conversations_path(@conversation)
+    redirect_to conversation_path(@conversation)
   end
 
   def destroy
@@ -56,25 +57,8 @@ class ConversationsController < ApplicationController
     @mailbox ||= current_user.mailbox
   end
 
- 
-
-  
   def get_conversation
     @conversation ||= @mailbox.conversations.find(params[:id])
-  end
-  
-  def message_params(*keys)
-    fetch_params(:message, *keys)
-  end
-
-  def fetch_params(key, *subkeys)
-    params[key].instance_eval do
-     case subkeys.size
-     when 0 then self
-     when 1 then self[subkeys.first]
-     else subkeys.map{|k| self[k] }
-     end
-    end
   end
 
   def get_box

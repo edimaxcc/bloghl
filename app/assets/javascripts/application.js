@@ -14,6 +14,7 @@
 //= require bootstrap-sprockets
 //= require jquery_ujs
 //= require turbolinks
+//= require chosen-jquery
 //= require bootstrap
 //= require_tree .
 //= require bootstrap/collapse
@@ -28,3 +29,4 @@
 //= require bootstrap/scrollspy
 //= require bootstrap/dropdown
 //= require bootstrap/carousel
+//= require messages
