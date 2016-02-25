@@ -1,0 +1,3 @@
+- conversation.participants.each do |participant|
+  - unless participant == current_user
+    = gravatar_for participant

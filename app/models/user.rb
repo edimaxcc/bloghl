@@ -1,4 +1,5 @@
 class User < ActiveRecord::Base
+ 
   acts_as_messageable
    
   devise :database_authenticatable, :registerable,
@@ -6,6 +7,7 @@ class User < ActiveRecord::Base
   belongs_to :sessions
   has_many :posts, dependent: :destroy
   has_many :comments
+  has_many :messages 
   has_many :active_relationships, class_name: "Relationship",
                                   foreign_key: "follower_id",
                                   dependent: :destroy
@@ -17,6 +19,10 @@ class User < ActiveRecord::Base
   has_many :followers, through: :passive_relationships, source: :follower 
 
 
+
+def mailboxer_emaill(object)
+  return mailboxer_emaill
+end 
 
   #follow users 
 def follow(other_user)
@@ -37,6 +43,7 @@ end
 def feed
 Post.where("user_id = ?", id)
 end
+
 
 
 end

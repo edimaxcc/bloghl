@@ -8,6 +8,8 @@
             p
             = text_field_tag :search
             = submit_tag "Search"
+      #add_post
+        = link_to "Add Post", new_post_path      
   .row
     - @search_following_posts.each do |post|
         .container
