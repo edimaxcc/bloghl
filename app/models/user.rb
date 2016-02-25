@@ -19,31 +19,32 @@ class User < ActiveRecord::Base
   has_many :followers, through: :passive_relationships, source: :follower 
 
 
-
-def mailboxer_emaill(object)
-  return mailboxer_emaill
-end 
-
-  #follow users 
-def follow(other_user)
- active_relationships.create(followed_id: other_user.id)
-end
-
-#Unfollows user
-def unfollow(other_user)
- active_relationships.find_by(followed_id: other_user).destroy
-end
-
-#Return true if de current_user is following the other user
-def following?(other_user)
- following.include?(other_user)
-end
-
-#Feeds Return post from the current_user
-def feed
-Post.where("user_id = ?", id)
-end
+  
 
 
+    #follow users 
+  def follow(other_user)
+   active_relationships.create(followed_id: other_user.id)
+  end
+
+  #Unfollows user
+  def unfollow(other_user)
+   active_relationships.find_by(followed_id: other_user).destroy
+  end
+
+  #Return true if de current_user is following the other user
+  def following?(other_user)
+   following.include?(other_user)
+  end
+
+  #Feeds Return post from the current_user
+  def feed
+  Post.where("user_id = ?", id)
+  end
+
+  #Def Method for mailboxer
+  def mailboxer_email(object)
+   return email
+  end
 
 end
