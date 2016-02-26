@@ -1,7 +1,7 @@
 class Comment < ActiveRecord::Base
   belongs_to :user
   belongs_to :post
-  has_manny  :comments
+  has_many  :comments
 
 
   validates :body, presence: true
