@@ -5,24 +5,25 @@
           .media
             .media-left
               = link_to "/users/#{comment.user_id}"
-                 = gravatar_image_tag comment.user.email, class: "img-rounded"
+                 = gravatar_image_tag comment.user.email, class: "img-rounded", id: "img-comment"
             .media-body
               = comment.body
-              |   
-              = link_to "×", comment_delete_place_path(comment), :method => :delete, :remote => true, :confirm => "Are you sure you want to remove this comment?", :disable_with => "×", :class => 'close'
+              - if user_signed_in?
+                |   
+                = link_to "×", comment_delete_place_path(comment), :method => :delete, :remote => true, :confirm => "Are you sure you want to remove this comment?", :disable_with => "×", :class => 'close'
 
-              br
-            .comment-nav
-              a.comment-reply
-                | reply
-            .reply-form
-              = form_for @new_comment do |f|
-                = f.hidden_field :commentable_id, value: @new_comment.commentable_id
-                = f.hidden_field :commentable_type, value: @new_comment.commentable_type
-                = f.hidden_field :comment_id, value: comment.id
-                .field.form-group
-                  = f.text_area :body, class: 'form-control'
-                .field.form-group
-                  = submit_tag "Post Reply", class: 'btn btn-primary'
-
+                br
+              .comment-nav
+                a.comment-reply
+                  | reply
+              - if user_signed_in?
+                .reply-form
+                  = form_for @new_comment do |f|
+                    = f.hidden_field :commentable_id, value: @new_comment.commentable_id
+                    = f.hidden_field :commentable_type, value: @new_comment.commentable_type
+                    = f.hidden_field :comment_id, value: comment.id
+                    .field.form-group
+                      = f.text_area :body, class: 'form-control'
+                    .field.form-group
+                      = submit_tag "Post Reply", class: 'btn btn-default'
               = render partial: "comments/reply", locals: {comments: comment.children}

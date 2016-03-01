@@ -16,10 +16,12 @@ jQuery ->
     $(document)
       .on "ajax:beforeSend", ".comment", ->
         $(this).fadeTo('fast', 0.5)
+      #.on "ajax:success", ".media", ->
         $(this).hide('fast')
+
       .on "ajax:error", ".comment", ->
         $(this).fadeTo('fast', 1)
-
+        
 $ ->
   $('.comment-reply').click ->
     $(this).closest('.comment').find('.reply-form').toggle()
