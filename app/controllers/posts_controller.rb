@@ -16,11 +16,22 @@ class PostsController < ApplicationController
   # GET /posts/1
   # GET /posts/1.json
   def show
-    #@user = User.find(params[:id])
     @post = Post.find(params[:id])
-    @comments = @post.comments.order('created_at DESC')
-    
+    @comments = @post.comment_threads.order('created_at desc')
+    if user_signed_in?
+    @new_comment = Comment.build_from(@post, current_user.id, "")
+    end
   end
+
+  def comment_destroy
+    @comment = Comment.find(params[:id])
+     if @comment.destroy
+        respond_to do |format|
+        format.html { redirect_to @comment, notice: 'The comment was successfully deleted!'}
+      end
+    end 
+  end   
+
 
   # GET /posts/new
   def new
@@ -72,12 +83,7 @@ class PostsController < ApplicationController
     end
   end
 
-  def comment
-    @comments = @user.posts.comments.build(params_comment)
-    render show
-  end
-
-
+ 
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_post

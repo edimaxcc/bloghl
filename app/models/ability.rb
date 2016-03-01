@@ -12,16 +12,16 @@ class Ability
      can :update, Post do |post|
       post.user == user
      end       
-     can :destroy, Comment do |comment|
-      comment.user == user
-     end
-     can :update, Comment do |comment|
-      comment.user == user
-     end
+     #can :destroy, Comment do |comment|
+      #comment.user == user
+     #end
+     #can :update, Comment do |comment|
+      #comment.user == user
+     #end
      can :create, Post
-     can :create, Comment
+     #can :create, Comment
      can :read, Post
-     can :read, Comment
+     #can :read, Comment
     end
    end 
  end

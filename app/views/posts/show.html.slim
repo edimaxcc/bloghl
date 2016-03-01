@@ -23,13 +23,9 @@
                   = link_to 'Delete', post_path,class: "btn btn-primary Back",id: "btn_show",  method: :delete, data: { confirm: 'Are you sure?' }
 
       
-        h3.span
-        |  Comments  
-        span.badge = @post.comments.count
 
-        = render "comments/comment"
-        
-        = render "comments/form"
+        = render partial: "comments/template", locals: {commentable: @post, new_comment: @comment}
+
 
     /! sidebar
     .aside.col-md-4.col-sm-8.col-xs-8

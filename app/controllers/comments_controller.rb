@@ -1,45 +1,59 @@
 class CommentsController < ApplicationController
-	
-  def new
-   @comment = Comment.new
-  end
 
-  def index
-    @comments = Comment.all
-  end  
+  def create
+     commentable = commentable_type.constantize.find(commentable_id)
+     @comment = Comment.build_from(commentable, current_user.id, body)
+     
+      respond_to do |format|
+        if @comment.save
+          make_child_comment
+          format.html  { redirect_to(:back, :notice => 'Comment was successfully added.') }
+        else
+          format.html  { render :action => "new" }
+        end
+      end
+    end
 
-	def create
-   @post = Post.find(params[:post_id])
-   @comment = @post.comments.create(comment_params.merge(user: current_user))
-   @comment.user_id = current_user.id
-    if @comment.save
-      flash[:success] = "Comment created!"
-      redirect_to @post
-    else
-      render 'comments/_form'
-    end 
-  end
-
-  def edit
-   
-  end
+  private
   
-  def update
-    @comment.update(comment_params)
+  def comment_params
+    params.require(:comment).permit(:body, :commentable_id, :commentable_type, :comment_id)
+  end 
+
+  def delete
     
   end
 
   def destroy
-    @post = Post.find(params[:post_id])
-    @comment = @post.comments.find(params[:id]).destroy
-    redirect_to @post
-    
+    @comment = Comment.find(params[:id])
+     if @comment.destroy
+        respond_to do |format|
+        format.html { redirect_to @comment, notice: 'The comment was successfully deleted!'}
+        format.js
+      end
+    end 
+  end
+  
+
+  def commentable_type
+    comment_params[:commentable_type]
+  end
+  
+  def commentable_id
+    comment_params[:commentable_id]
+  end    
+
+  def comment_id
+    comment_params[:comment_id]
+  end
+  def body
+    comment_params[:body]
   end
 
-  private
+  def make_child_comment
+    return "" if comment_id.blank?
 
-  def comment_params
-   params.require(:comment).permit(:body, :user_id, :post_id) 	
-  end 
-
-end
+    parent_comment = Comment.find comment_id
+    @comment.move_to_child_of(parent_comment)
+  end
+ end

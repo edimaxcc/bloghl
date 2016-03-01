@@ -1,0 +1,9 @@
+- if current_user
+  .container-fluid
+    h3 Add a comment
+    = form_for([@post, @post.comments.build]) do |c| 
+       .col-sm-6
+         = c.text_area :body, class: "form-control", placeholder: "Deixe seu comentário"
+         = c.hidden_field :parent_id
+       .col-sm-offset-2.col-sm-2
+		 = c.submit class: "btn btn-primary"
